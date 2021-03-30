@@ -27,7 +27,7 @@ public class MoviesController {
   }
 
   @PostMapping()
-  public ResponseEntity<Object> createMovie(@RequestBody MovieRequest movie){
+  public ResponseEntity<Object> createMovie(@RequestBody Movie movie){
     ResponseEntity<Object> movieResponseEntity = movieService.addNewMovie(movie);
     return movieResponseEntity;
   }
@@ -43,7 +43,7 @@ public class MoviesController {
   {        return movieService.retierveAllMovie(); }
 
   @GetMapping("/id/{id}")
-  public ResponseEntity<Movie> retrieveDirectorById(@PathVariable(value = "id") Long movieId){
+  public ResponseEntity<Movie> retrieveMovieById(@PathVariable(value = "id") Long movieId){
     return movieService.retierveMovieById(movieId);
   }
 

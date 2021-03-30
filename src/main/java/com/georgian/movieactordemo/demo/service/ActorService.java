@@ -1,6 +1,7 @@
 package com.georgian.movieactordemo.demo.service;
 
 import com.georgian.movieactordemo.demo.model.Actor;
+import com.georgian.movieactordemo.demo.model.ActorRequest;
 import com.georgian.movieactordemo.demo.repository.ActorRepository;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,7 +19,12 @@ public class ActorService {
     this.actorRepository = actorRepository;
   }
 
-  public ResponseEntity<Actor> addNewActor(Actor actor) {
+  public ResponseEntity<Actor> addNewActor(ActorRequest actorRequest) {
+    Actor actor = new Actor();
+    actor.setFirstName(actorRequest.getFirstName());
+    actor.setLastName(actorRequest.getLastName());
+    actor.setDOB(actorRequest.getDOB());
+    actor.setNationality(actorRequest.getNationality());
     Actor save = actorRepository.save(actor);
     return new ResponseEntity<>(save, HttpStatus.ACCEPTED);
   }

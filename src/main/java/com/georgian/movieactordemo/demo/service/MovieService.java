@@ -24,7 +24,7 @@ public class MovieService {
   }
 
 
-  public ResponseEntity<Object> addNewMovie(MovieRequest movie) {
+  public ResponseEntity<Object> addNewMovie(Movie movie) {
     Movie movie1 = new Movie();
 
     movie1.setMovieTitle(movie.getMovieTitle());
@@ -32,7 +32,7 @@ public class MovieService {
     movie1.setRating(movie.getRating());
     movie1.setReleaseYear(movie.getReleaseYear());
 
-    for(Actor actor:movie.getActorList())
+    for(Actor actor:movie.getActors())
     {
       Actor save = actorRepository.save(actor);
       if(!actorRepository.findById(save.getActorId()).isPresent()){
@@ -41,7 +41,7 @@ public class MovieService {
     }
 
 
-    movie1.setActors(movie.getActorList());
+    movie1.setActors(movie.getActors());
     //movie1.setActors(movie.getActorList());
 
     //movie.getActorList().forEach(actor1 -> actor1.setMovies(Arrays.asList(movie1)));
@@ -85,6 +85,7 @@ public class MovieService {
   }
 
   public ResponseEntity<Movie> retierveMovieById(Long movieId) {
+
     Optional<Movie> byId = movieRepository.findById(movieId);
     if(!byId.isPresent()){
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

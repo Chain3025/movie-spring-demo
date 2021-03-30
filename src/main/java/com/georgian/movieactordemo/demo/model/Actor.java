@@ -16,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import lombok.Data;
 
 @Entity
@@ -34,6 +35,10 @@ public class Actor {
 //  @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "actor")
 //  @JsonBackReference
 //  private List<MovieActor> movieActors;
+
   @ManyToOne
+  @JsonIgnore
   private Movie movie;
+
+
 }

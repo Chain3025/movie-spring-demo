@@ -1,6 +1,7 @@
 package com.georgian.movieactordemo.demo.controller;
 
 import com.georgian.movieactordemo.demo.model.Actor;
+import com.georgian.movieactordemo.demo.model.ActorRequest;
 import com.georgian.movieactordemo.demo.service.ActorService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class ActorController {
 
 
   @PostMapping()
-  public ResponseEntity<Actor> createActor(@RequestBody Actor actor){
-    ResponseEntity<Actor> actorResponseEntity = actorService.addNewActor(actor);
+  public ResponseEntity<Actor> createActor(@RequestBody ActorRequest actorRequest){
+    ResponseEntity<Actor> actorResponseEntity = actorService.addNewActor(actorRequest);
     return actorResponseEntity;
   }
 

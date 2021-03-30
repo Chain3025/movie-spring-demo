@@ -37,6 +37,6 @@ public class Movie {
 //  @JsonBackReference
 //  private List<MovieActor> movieActors;
 
-  @OneToMany(targetEntity = Actor.class,cascade = CascadeType.PERSIST,orphanRemoval = true)
+  @OneToMany(targetEntity = Actor.class,cascade = CascadeType.PERSIST,orphanRemoval = true,mappedBy = "movie")
   private List<Actor> actors;
 }

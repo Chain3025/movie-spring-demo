@@ -35,6 +35,5 @@ public class Actor {
 //  @JsonBackReference
 //  private List<MovieActor> movieActors;
   @ManyToOne
-  @JoinColumn(name = "movie_id")
   private Movie movie;
 }

@@ -36,7 +36,7 @@ public class Movie {
 //  @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "movie")
 //  @JsonBackReference
 //  private List<MovieActor> movieActors;
-
-  @OneToMany(targetEntity = Actor.class,cascade = CascadeType.PERSIST,orphanRemoval = true,mappedBy = "movie")
+  @JoinColumn(name = "movie_id")
+  @OneToMany(targetEntity = Actor.class,cascade = CascadeType.ALL)
   private List<Actor> actors;
 }

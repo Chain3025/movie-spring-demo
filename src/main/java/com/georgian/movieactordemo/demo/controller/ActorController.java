@@ -25,8 +25,8 @@ public class ActorController {
 
 
   @PostMapping()
-  public ResponseEntity<Actor> createActor(@RequestBody ActorRequest actorRequest){
-    ResponseEntity<Actor> actorResponseEntity = actorService.addNewActor(actorRequest);
+  public ResponseEntity<Object> createActor(@RequestBody Actor actorRequest){
+    ResponseEntity<Object> actorResponseEntity = actorService.addNewActor(actorRequest);
     return actorResponseEntity;
   }
 
@@ -48,9 +48,9 @@ public class ActorController {
 
 
   @DeleteMapping("/id/{id}")
-  public ResponseEntity<Actor> deleteActorById(@PathVariable("id") Long actorId){
+  public ResponseEntity<Object> deleteActorById(@PathVariable("id") Long actorId){
     //return authorRepository.findById(id  );
-    ResponseEntity<Actor> actorResponseEntity = actorService.deleteById(actorId);
+    ResponseEntity<Object> actorResponseEntity = actorService.deleteById(actorId);
     return actorResponseEntity;
 
   }

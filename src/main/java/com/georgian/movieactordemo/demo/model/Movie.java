@@ -1,6 +1,9 @@
 package com.georgian.movieactordemo.demo.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -17,6 +20,10 @@ import lombok.Data;
 
 @Entity
 @Data
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "movieId"
+)
 public class Movie {
 
   @Id
@@ -27,16 +34,6 @@ public class Movie {
   private LocalDate releaseYear;
   private Integer rating;
 
-//  @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-//  @JoinTable(name = "movie_actor",
-//      joinColumns ={@JoinColumn(name = "movie_id")},
-//      inverseJoinColumns = {@JoinColumn(name = "actor_id")}
-//  )
-
-//  @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "movie")
-//  @JsonBackReference
-//  private List<MovieActor> movieActors;
-  @JoinColumn(name = "movie_id")
-  @OneToMany(targetEntity = Actor.class,cascade = CascadeType.ALL)
+  @ManyToMany(targetEntity = Actor.class,mappedBy = "movies",cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
   private List<Actor> actors;
 }

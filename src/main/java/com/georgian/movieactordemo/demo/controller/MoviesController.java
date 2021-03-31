@@ -33,7 +33,7 @@ public class MoviesController {
   }
 
   @PutMapping()
-  public ResponseEntity<Movie> updateMovie(@RequestBody MovieRequest movie, @RequestParam(value = "id")Long id){
+  public ResponseEntity<Movie> updateMovie(@RequestBody Movie movie, @RequestParam(value = "id")Long id){
     ResponseEntity<Movie> movieResponseEntity = movieService.updateMovie(movie, id);
     return movieResponseEntity;
   }

@@ -19,14 +19,20 @@ public class ActorService {
     this.actorRepository = actorRepository;
   }
 
-  public ResponseEntity<Actor> addNewActor(ActorRequest actorRequest) {
+  public ResponseEntity<Object> addNewActor(Actor actorRequest) {
+
     Actor actor = new Actor();
     actor.setFirstName(actorRequest.getFirstName());
     actor.setLastName(actorRequest.getLastName());
     actor.setDOB(actorRequest.getDOB());
     actor.setNationality(actorRequest.getNationality());
+    actor.setMovies(actorRequest.getMovies());
     Actor save = actorRepository.save(actor);
-    return new ResponseEntity<>(save, HttpStatus.ACCEPTED);
+
+    if (actorRepository.findById(save.getActorId()).isPresent())
+      return ResponseEntity.accepted().body("actor created successfully");
+    else
+      return ResponseEntity.unprocessableEntity().body("Failed create the user specified");
   }
 
   public ResponseEntity<Actor> updateActor(Actor reqActor, Long id) {
@@ -50,6 +56,7 @@ public class ActorService {
     if(reqActor.getActorId()!=null){
       dbActor.setActorId(reqActor.getActorId());
     }
+    dbActor.setMovies(reqActor.getMovies());
     Actor saveActor = actorRepository.save(dbActor);
 
     return new ResponseEntity<>(saveActor,HttpStatus.ACCEPTED);
@@ -69,15 +76,13 @@ public class ActorService {
     return new ResponseEntity<>(byId.get(),HttpStatus.OK);
   }
 
-  public ResponseEntity<Actor> deleteById(Long actorId) {
-    Optional<Actor> byId = actorRepository.findById(actorId);
-    if(!byId.isPresent()){
-      return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
-    }
-    Actor actor = byId.get();
-    //actor.setMovies(null);
-    actorRepository.save(actor);
-    actorRepository.delete(byId.get());
-    return new ResponseEntity<>(HttpStatus.ACCEPTED);
+  public ResponseEntity<Object> deleteById(Long actorId) {
+    if (actorRepository.findById(actorId).isPresent()) {
+      actorRepository.deleteById(actorId);
+      if (actorRepository.findById(actorId).isPresent())
+        return ResponseEntity.unprocessableEntity().body("Failed to Delete the specified User");
+      else return ResponseEntity.ok().body("Successfully deleted the specified user");
+    } else
+      return ResponseEntity.badRequest().body("Cannot find the user specified");
   }
 }
